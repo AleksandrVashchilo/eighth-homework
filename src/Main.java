@@ -1,51 +1,88 @@
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Main {
     public static void main(String[] args) {
 
-        Money money = new Money();
-        int m = money.getMoney();
-        System.out.println(m);
+        //Money money = new Money();
+        //int m = money.getMoney();
+        //System.out.println(m);
 
         Worker worker = new Worker();
+        Worker worker2 = new Worker();
 
-        Pensioner pensioner = new Pensioner("Mark", 35, 170, 65, 1.2);
-        System.out.println(pensioner);
+        //Pensioner pensioner = new Pensioner("Mark", 35, 170, 65, 1.2);
+        //System.out.println(pensioner);
 
         worker.setMinSalary(1000);
         worker.setMaxSalary(2000);
-        worker.setAge(50);
+        worker.setAge(45);
 
-        double answer = worker.calculatePension();
+        worker2.setMinSalary(500);
+        worker2.setMaxSalary(1500);
+        worker2.setAge(45);
 
-        System.out.println(worker + " твоя пенсия составит $:");
-        System.out.println(answer);
+        //double answer = worker.calculatePension();
 
-        List<Person> children = new ArrayList<>();
+        //System.out.println(worker + " твоя пенсия составит $:");
+        //System.out.println(answer);
 
-        Worker firstChild = new Worker();
-        firstChild.setName("Иван");
+        //List<Person> children = new ArrayList<>();
 
-        Worker secondChild = new Worker();
-        secondChild.setName("Дмитрий");
+       //Worker firstChild = new Worker();
+        //firstChild.setName("Иван");
 
-        children.add(firstChild);
-        children.add(secondChild);
+        //Worker secondChild = new Worker();
+        //secondChild.setName("Дмитрий");
 
-        worker.setChildren(children);
+        //children.add(firstChild);
+        //children.add(secondChild);
 
-        worker.infoAboutChildren();
+        //worker.setChildren(children);
 
-        Company oracle = new Company("Oracle");
-        Company google = new Company("Google");
+        //worker.infoAboutChildren();
 
-        List<Company> companyList = new ArrayList<>();
-        companyList.add(oracle);
-        companyList.add(google);
+        //Company oracle = new Company("Oracle");
+        //Company google = new Company("Google");
 
-        worker.setCompanyList(companyList);
+        //List<Company> companyList = new ArrayList<>();
+        //companyList.add(oracle);
+        //companyList.add(google);
 
-        worker.infoAboutCompany();
+        //worker.setCompanyList(companyList);
+
+        //worker.infoAboutCompany();
+
+        Set<PensionFund> set = new HashSet<>();
+
+        PensionFund pensionFund = new PensionFund("Пенсионный фонд Будва", "27-09-2000", TypeOfFund.STATE);
+        set.add(pensionFund);
+
+        PensionFund pensionFundSecond = new PensionFund("Пенсионный фонд Адриатика", "08-08-2010", TypeOfFund.SCAM);
+        set.add(pensionFundSecond);
+
+        PensionFund pensionFundThird = new PensionFund("Пенсионный фонд Жабляк", "09-09-2002", TypeOfFund.NOT_STATE);
+        set.add(pensionFundThird);
+
+        worker.setAvailablePensionFunds(set);
+
+        System.out.println(worker.calculatePension());
+
+        Set<PensionFund> set2 = new HashSet<>();
+
+        PensionFund pensionFund2 = new PensionFund("Пенсионный фонд Минск", "27-09-2000", TypeOfFund.STATE);
+        set2.add(pensionFund2);
+
+        PensionFund pensionFundSecond2 = new PensionFund("Пенсионный фонд Брест", "08-08-2010", TypeOfFund.SCAM);
+        set2.add(pensionFundSecond2);
+
+        PensionFund pensionFundThird2 = new PensionFund("Пенсионный фонд Немига", "09-09-2002", TypeOfFund.NOT_STATE);
+        set2.add(pensionFundThird2);
+
+        worker2.setAvailablePensionFunds(set2);
+
+        System.out.println(worker2.calculatePension());
     }
 }

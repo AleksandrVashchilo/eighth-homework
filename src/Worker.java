@@ -1,31 +1,42 @@
 import java.util.List;
+import java.util.Set;
 
 public class Worker extends Person implements AbleToCalculatePension {
 
     private static final int MONEY_PER_CHILD = 200;
-    private int minSalary;
-    private int maxSalary;
+    private double minSalary;
+    private double maxSalary;
 
     private List<Company> companyList;
 
-    public int getMinSalary() {
+    public double getMinSalary() {
         return minSalary;
     }
 
-    public int getMaxSalary() {
+    public double getMaxSalary() {
         return maxSalary;
     }
 
-    public void setMinSalary(int minSalary) {
+    public void setMinSalary(double minSalary) {
         this.minSalary = minSalary;
     }
 
-    public void setMaxSalary(int maxSalary) {
+    public void setMaxSalary(double maxSalary) {
         this.maxSalary = maxSalary;
     }
 
     public List<Company> getCompanyList() {
         return companyList;
+    }
+
+    private Set<PensionFund> availablePensionFunds;
+
+    public Set<PensionFund> getAvailablePensionFunds() {
+        return availablePensionFunds;
+    }
+
+    public void setAvailablePensionFunds(Set<PensionFund> availablePensionFunds) {
+        this.availablePensionFunds = availablePensionFunds;
     }
 
     public void setCompanyList(List<Company> companyList) {
@@ -52,14 +63,20 @@ public class Worker extends Person implements AbleToCalculatePension {
 
         @Override
         public double calculatePension () {
-            PensionFund pensionFund = new PensionFund("Пенсионный фонд Милана", "27-12-1946", TypeOfFund.STATE);
             int age = getAge();
             int additionalSalary = 0;
             if (getChildren() != null) {
                 additionalSalary = getChildren().size() * MONEY_PER_CHILD;
             }
-            double result = pensionFund.calculatePension(age, minSalary + additionalSalary, maxSalary);
-            return result;
+            additionalSalary += minSalary;
+            double maxPension = 0.0;
+            for (PensionFund fund : availablePensionFunds) {
+                double result = fund.calculatePension(age, minSalary + additionalSalary, maxSalary);
+                if (result > maxPension) {
+                    maxPension = result;
+                }
+            }
+            return maxPension;
         }
     }
 
